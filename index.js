@@ -61,3 +61,5 @@ console.log(manager.getProducts());
 
 manager.getProductsById(0);
 manager.getProducts(1)
+
+//realizare cambios aqui
