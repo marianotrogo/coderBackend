@@ -1,6 +1,6 @@
 class ProductManager {
     products =[];
-    #acumulador = 0;
+    #acumulador = 1;
 
     addProduct(title,description,price,thumbnail,code,stock){
         const product = this.products.find((prod)=> prod.code === code);
@@ -59,5 +59,5 @@ manager.addProduct(
 
 console.log(manager.getProducts());
 
-manager.getProductsById(0);
-manager.getProducts(1)
+manager.getProductsById(1);
+manager.getProducts(2)
