@@ -1,63 +1,100 @@
+const fs = require("fs");
+
 class ProductManager {
-    products =[];
-    #acumulador = 0;
+    #path;
+    #acumulator = 1;
 
-    addProduct(title,description,price,thumbnail,code,stock){
-        const product = this.products.find((prod)=> prod.code === code);
-        if(!product){
-            const newProduct = {
-                id: this.#acumulador,
-                title,
-                description,
-                price,
-                thumbnail,
-                code,
-                stock,
-            };
-            this.products = [...this.products, newProduct];
-            this.#acumulador++
-        }else{
-            throw new Error(`Error el producto code ${code} existe`);
 
+    constructor(path) {
+        this.#path = path;
+    }
+
+    async addProduct(title, description, price, thumbnail, code, stock) {
+        const products = await this.getProducts();
+
+        const productExistentes = products.find((p) => p.code === code);
+        if (productExistentes) {
+            throw new Error(`Producto con codigo${code} existe`);
+        }
+
+        const newProduct = {
+            id: this.#acumulator,
+            title,
+            description,
+            price,
+            thumbnail,
+            code,
+            stock,
+        };
+
+        const updatedProduct = [...products, newProduct];
+
+        await fs.promises.writeFile(this.#path, JSON.stringify(updatedProduct));
+
+        this.#acumulator++;
+
+        return newProduct;
+    }
+    async getProducts() {
+        try {
+            const productJSON = await fs.promises.readFile(this.#path);
+            return JSON.parse(productJSON);
+        } catch (err) {
+            return [];
         }
     }
 
-    getProducts(){
-        return this.products;
-    }
-    getProductsById(idProduct){
-        const product = this.products.find((prod)=>prod.id === idProduct);
-        if(!product){
-            throw new Error(`Not Found`);
+    async getProductsById(id) {
+        const products = await this.getProducts();
+        const product = products.find((p) => p.id === id);
 
-        }else{
-            console.log(`EL producto con ${product.id} existe`)
-            return product
+        if (!product) {
+            throw new Error(`Not Found ${id}`);
         }
-        }
+        return product;
+    }
+
+    async updateProduct(id, data) {
+        const products = await this.getProducts();
+        const updatedProducts = products.map((p) => {
+            if (p.id === id) {
+                return {
+                    ...p,
+                    ...data,
+                    id,
+                };
+            }
+            return p;
+        });
+
+        await fs.promises.writeFile(this.#path, JSON.stringify(updatedProducts));
+    }
+    async deleteProduct(id) {
+        const products = await this.getProducts();
+        const updatedProducts = products.filter((p) => {
+            return p.id !== id;
+        });
+        await fs.promises.writeFile(this.#path, JSON.stringify(updatedProducts));
+    }
 }
+async function main() {
 
-const manager = new ProductManager();
-console.log(manager.getProducts());
+    const manager = new ProductManager('./productos.json');
 
-manager.addProduct(
-    'Bladurs Gate 3',
-    'PC',
-    99,
-    'img bg',
-    '4456',
-    12
-)
-manager.addProduct(
-    'Red Dead Redeption',
-    'PC',
-    109,
-    'img red',
-    '0023',
-    12
-)
+    await manager.updateProduct(
+        1,
+        {
+            title: 'actualizado',
+            description: 'actualizado',
+            price: 111,
+            thumbnail: 'actualizado',
+            code: 1234,
+            stock: 9
+        }
+    );
 
-console.log(manager.getProducts());
+    console.log(await manager.getProducts());
+}
+main()
 
-manager.getProductsById(0);
-manager.getProducts(1)
+module.exports = ProductManager;
