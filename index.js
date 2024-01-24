@@ -2,7 +2,7 @@ const fs = require("fs");
 
 class ProductManager {
     #path;
-    #acumulator = 1;
+    #acumulator = 0;
 
 
     constructor(path) {
