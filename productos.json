@@ -1,1 +1,29 @@
-[{"id":1,"title":"actualizado","description":"actualizado","price":111,"thumbnail":"actualizado","code":1234,"stock":9},{"id":2,"title":"Baldurs Gate 3","description":"PC","price":60,"thumbnail":"Baldur.jpg","code":"code2","stock":8},{"id":3,"title":"Shadow of the Colossuss","description":"Ps4","price":39,"thumbnail":"imagen Shadow","code":"code3","stock":5}]
+[
+    {
+        "id": 1,
+        "title": "actualizado",
+        "description": "actualizado",
+        "price": 111,
+        "thumbnail": "actualizado",
+        "code": 1234,
+        "stock": 9
+    },
+    {
+        "id": 2,
+        "title": "Baldurs Gate 3",
+        "description": "PC",
+        "price": 60,
+        "thumbnail": "Baldur.jpg",
+        "code": "code2",
+        "stock": 8
+    },
+    {
+        "id": 3,
+        "title": "Shadow of the Colossuss",
+        "description": "Ps4",
+        "price": 39,
+        "thumbnail": "imagen Shadow",
+        "code": "code3",
+        "stock": 5
+    }
+]
