@@ -36,7 +36,7 @@ class ProductManager {
         return newProduct;
     }
     async getProducts() {
-        try {
+        try { 
             const productJSON = await fs.promises.readFile(this.#path);
             return JSON.parse(productJSON);
         } catch (err) {
