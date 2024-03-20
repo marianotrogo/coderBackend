@@ -12,7 +12,6 @@ const app = express();
 app.use(urlencoded({extended: true}));
 
 app.use(express.static(__dirname + "/../public"));
-app.use("/api/users", userRouter);
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views',__dirname + '/views');
