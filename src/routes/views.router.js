@@ -2,7 +2,7 @@ import { Router, json } from "express";
 import __dirname from "../utils.js";
 import productManager from "../productManager.js";
 
-const item = new productManager(__dirname + "./product.json");
+const item = new productManager(__dirname + "/product.json");
 
 const viewsRouter = Router();
 

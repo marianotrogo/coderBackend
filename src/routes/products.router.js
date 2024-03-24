@@ -3,7 +3,7 @@ import __dirname from "../utils.js";
 import productManager from "../productManager.js";
 
 const productsRouter = Router();
-let manager = new productManager(__dirname+"./product.json");
+let manager = new productManager(__dirname+"/product.json");
 productsRouter.use(json());
 
 productsRouter.get("/", async (req, res) => {
