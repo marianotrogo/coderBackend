@@ -5,7 +5,7 @@ import productManager from "../productManager.js";
 
 const cartRouter = Router();
 let cartManager = new CartManager(__dirname+"/cartManager/carts.json");
-let productsManager = new productManager(__dirname+"/productos.json");
+let productsManager = new productManager(__dirname+"/product.json");
 cartRouter.use(json());
 
 cartRouter.get("/", async (req, res) => {
