@@ -9,7 +9,7 @@ const viewsRouter = Router();
 viewsRouter.get("/", async(req,res)=>{
     const prods =await item.getProducts();
     console.log(prods);
-    res.render("home",{prods});
+    res.render("home.handlebars",{prods});
 })
 
 viewsRouter.get('/realTimeProducts', (req,res)=>{

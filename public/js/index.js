@@ -9,7 +9,7 @@ socket.on("productList", async(data)=>{
             <ul>
                 <li> Titulo:${e.title},
                     Id:${e.id},
-                    Precio:${e.precio},
+                    Precio:${e.price},
                     Stock:${e.stock}
                 </li>
             </ul>`

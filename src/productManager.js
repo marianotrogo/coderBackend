@@ -2,21 +2,21 @@ import fs from "fs";
 
 
 class productManager {
-    #path="./src/productos.json";
+    #path = "./product.json";
     #acumulator = 0;
-    
+
     constructor(path) {
         this.#path = path;
     }
 
     async addProducts(
-        title, 
-        description, 
-        price, 
+        title,
+        description,
+        price,
         //thumbnail, 
-        code, 
+        code,
         stock,
-        ) {
+    ) {
         const products = await this.getProducts();
 
         const productExistentes = products.find((p) => p.code === code);
