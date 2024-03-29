@@ -34,7 +34,6 @@ productsRouter.post("/add", async(req,res,midSocket)=>{
   const title = await req.body.title;
   const description = await req.body.description;
   const price = await Number(req.body.price);
-  //const thumbnail = await req.query.status;
   const stock = await Number(req.body.stock);
   const category = await req.body.category;
   const test = console.log(code+title+description+price+stock+category);
