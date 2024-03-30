@@ -24,8 +24,8 @@ app.use("/api/carts", cartRouter);
 
 app.use((req,res, midSocket)=>{
     const data = req.enviarProds;
-    req.socketServer= socketServer;
-    socketServer.emit("productList", data)
+    req.io= io;
+    io.emit("productList", data)
     midSocket();
 })
 
@@ -34,9 +34,10 @@ app.use((req,res, midSocket)=>{
 const httpServer = app.listen(8080, () => 
 console.log(`Server listening to port 8080`));
 
-const socketServer = new Server(httpServer);
+const io = new Server(httpServer);
 
-socketServer.on("connection", (socket)=>{
+io.on("connection", (socket)=>{
+    console.log(socket.id);
     console.log("nuevo cliente conectado");
     socket.emit("productList", "mensaje desde el server");
 });
