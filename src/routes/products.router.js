@@ -1,9 +1,10 @@
 import { Router, json } from "express";
-import __dirname from "../util.js";
+import __dirname from "../utils.js";
 import productManager from "../productManager.js";
 
+
 const productsRouter = Router();
-let manager = new productManager(__dirname+"/products.json");
+let manager = new productManager(__dirname+"/product.json");
 productsRouter.use(json());
 
 productsRouter.get("/", async (req, res) => {
@@ -29,31 +30,34 @@ productsRouter.get("/:pid", async (req, res) => {
   res.send(products);
 });
 
-productsRouter.post("/", async (req, res) => {
-  const { title, description, price, thumbnail, code, stock } = req.body;
-  const newProd = await manager.addProduct({
-    title,
-    description,
-    price,
-    thumbnail,
-    code,
-    stock
-  });
-  res.send(newProd);
-});
+productsRouter.post("/add", async(req,res,midSocket)=>{
+  const code = Number(req.body.code);
+  const title = await req.body.title;
+  const description = await req.body.description;
+  const price = await Number(req.body.price);
+  const stock = await Number(req.body.stock);
+  const category = await req.body.category;
+  const test = console.log(code+title+description+price+stock+category);
+  const result = await manager.addProducts(code,title,description,price,stock,category);
+  const enviarProds = await manager.getProducts();
+  req.enviarProds = enviarProds;
+  midSocket();
+  await res.send(test)
+})
+
 
 productsRouter.put("/:pid", async (req, res) => {
   let pid = parseInt(req.params.pid);
   const { title, description, price, thumbnail, code, stock,category } = req.body;
   const updated = await manager.updateProduct(
-    pid,
+    pid,{
     title,
     description,
     price,
     thumbnail,
     code,
     stock,
-    category
+    category}
   );
   res.send(updated);
 });
