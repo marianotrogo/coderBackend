@@ -1,5 +1,5 @@
 import { Router, json } from "express";
-import __dirname from "../utils.js";
+import __dirname from "../util.js";
 import productManager from "../productManager.js";
 
 
