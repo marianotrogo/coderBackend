@@ -1,5 +1,5 @@
-import { json } from "express";
-import fs from "fs";
+const {json} = require('express')
+const fs = require ('fs')
 
 
 class CartManager {
@@ -70,4 +70,4 @@ await fs.promises.writeFile(this.#path,(cartsString.replace(allString, cartProdS
   }
 }
 
-export default CartManager;
+module.exports = CartManager

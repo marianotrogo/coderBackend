@@ -1,14 +1,15 @@
-import { Router, json } from "express";
-import __dirname from "../utils.js";
-import productManager from "../productManager.js";
-
+const { Router, json } = require('express')
+const ProductManager = require('../productManager')
 
 const productsRouter = Router();
-let manager = new productManager(__dirname+"/product.json");
+
+
+let manager = new ProductManager(process.cwd() + "src/product.json");
+
+
 productsRouter.use(json());
 
 productsRouter.get("/", async (req, res) => {
-  console.log(__dirname)
   try {
     const products = await manager.getProducts();
     const { limit } = req.query;
@@ -26,45 +27,44 @@ productsRouter.get("/", async (req, res) => {
 
 productsRouter.get("/:pid", async (req, res) => {
   let num = parseInt(req.params.pid);
-  const products = await manager.getProductsById(num);
+  const products = await manager.findOne(num);
   res.send(products);
 });
 
-productsRouter.post("/add", async(req,res,midSocket)=>{
-  const code = Number(req.body.code);
+productsRouter.post("/add", async (req, res, midSocket) => {
   const title = await req.body.title;
   const description = await req.body.description;
-  const price = await Number(req.body.price);
-  const stock = await Number(req.body.stock);
-  const category = await req.body.category;
-  const test = console.log(code+title+description+price+stock+category);
-  const result = await manager.addProducts(code,title,description,price,stock,category);
-  const enviarProds = await manager.getProducts();
+  const price = Number(req.body.price);
+  const code = Number(req.body.code);
+  const stock = Number(req.body.stock);
+  const test = console.log(title + description + price + code + stock);
+  const result = await manager.addProducts(title, description, price, code, stock);
+  const enviarProds = await manager.getProducts(result);
   req.enviarProds = enviarProds;
   midSocket();
-  await res.send(test)
+  res.send(result)
 })
 
 
 productsRouter.put("/:pid", async (req, res) => {
   let pid = parseInt(req.params.pid);
-  const { title, description, price, thumbnail, code, stock,category } = req.body;
-  const updated = await manager.updateProduct(
-    pid,{
+  const { title, description, price, code, stock } = req.body;
+  const updated = await manager.updateOne(
+    pid, {
     title,
     description,
     price,
-    thumbnail,
     code,
-    stock,
-    category}
+    stock
+  }
   );
-  res.send(updated);
+  res.send(updated, 'Updated');
 });
 
 productsRouter.delete("/:pid", async (req, res) => {
   let pid = parseInt(req.params.pid);
-  const deleteProduct = await manager.deleteProduct(pid);
+  const deleteProduct = await manager.deleteOne(pid);
   res.send(deleteProduct);
 });
-export default productsRouter;
+
+module.exports = productsRouter

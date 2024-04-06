@@ -1,23 +1,22 @@
-import fs from "fs";
+const fs = require('fs')
 
-
-class productManager {
-    #path="./product.json";
+class ProductManager {
+    ;
     #acumulator = 0;
-    
-    constructor(path) {
-        this.#path = path;
+
+    constructor() {
+        this.path = `${process.cwd()}/src/product.json`;
     }
 
     async addProducts(
-        title, 
-        description, 
-        price, 
-        //thumbnail, 
-        code, 
+        title,
+        description,
+        price,
+        code,
         stock,
-        ) {
+    ) {
         const products = await this.getProducts();
+
 
         const productExistentes = products.find((p) => p.code === code);
         if (productExistentes) {
@@ -29,14 +28,13 @@ class productManager {
             title,
             description,
             price,
-            // thumbnail,
             code,
             stock,
         };
 
         const updatedProduct = [...products, newProduct];
 
-        await fs.promises.writeFile(this.#path, JSON.stringify(updatedProduct));
+        await fs.promises.writeFile(this.path, JSON.stringify(updatedProduct));
 
         this.#acumulator++;
 
@@ -44,14 +42,14 @@ class productManager {
     }
     async getProducts() {
         try {
-            const productJSON = await fs.promises.readFile(this.#path);
+            const productJSON = await fs.promises.readFile(this.path);
             return JSON.parse(productJSON);
         } catch (err) {
             return [];
         }
     }
 
-    async getProductsById(id) {
+    async findOne(id) {
         const products = await this.getProducts();
         const product = products.find((p) => p.id === id);
         if (!product) {
@@ -60,7 +58,7 @@ class productManager {
         return product;
     }
 
-    async updateProduct(id, data) {
+    async updateOne(id, data) {
         const products = await this.getProducts();
         const updatedProducts = products.map((p) => {
             if (p.id === id) {
@@ -73,16 +71,18 @@ class productManager {
             return p;
         });
 
-        await fs.promises.writeFile(this.#path, JSON.stringify(updatedProducts));
+        await fs.promises.writeFile(this.path, JSON.stringify(updatedProducts));
     }
-    async deleteProduct(id) {
+    async deleteOne(id) {
         const products = await this.getProducts();
         const updatedProducts = products.filter((p) => {
             return p.id !== id;
         });
-        await fs.promises.writeFile(this.#path, JSON.stringify(updatedProducts));
+        await fs.promises.writeFile(this.path, JSON.stringify(updatedProducts));
     }
 }
 
 
-export default productManager;
+
+
+module.exports = ProductManager
