@@ -5,8 +5,10 @@ const { engine } = require('express-handlebars')
 // const viewsRouter = require('./routes/views.router')
 const { Server } = require('socket.io')
 const router = require('./routes/router')
+const ProductManager = require('./productManager')
 
 const app = express();
+const manager = new ProductManager
 
 
 app.use(express.static(process.cwd() + '/src/public'))
@@ -18,14 +20,6 @@ app.set('view engine', 'handlebars')
 app.set('views', process.cwd() + '/src/views')
 
 
-
-app.use((req, res, midSocket) => {
-    const data = req.enviarProds;
-    req.io = io;
-    io.emit("productList",data)
-   midSocket()
-})
-
 router(app)
 
 
@@ -34,11 +28,16 @@ const httpServer = app.listen(8080, () => {
     console.log('listen to port 8080')
 })
 
+let productList = manager.getProducts()
+
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
     socket.on('newClient', data=>{
         console.log(data);  
+        
+        socket.emit('productList',productList);
+        
     })
     
 })

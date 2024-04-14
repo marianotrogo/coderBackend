@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const ProductManager = require('../productManager')
 
-const item = new ProductManager(process.cwd()+ 'product.json')
+const item = new ProductManager()
 
 const router = Router()
 

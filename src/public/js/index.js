@@ -1,28 +1,19 @@
 const socket = io();
 
-
 socket.emit('newClient', 'new client connected')
 
+const productData = document.getElementById('productosActualizados')
 
-
-
-
-
-
-const productData = document.getElementById("prodsList-display");
-
-socket.on("productList", async(data)=>{
-    console.log(data);
+socket.on("productList", async data=>{
+    const dataProd = JSON.parse(data)
+    console.log(dataProd);
     let prodsList = "";
-    console.log(data);
-    await data.forEach((e)=>{
-
-        console.log(data);
+          await dataProd.forEach((e)=>{
         prodsList += `
             <ul>
                 <li> Titulo:${e.title},
                     Id:${e.id},
-                    Precio:${e.precio},
+                    Precio:${e.price},
                     Stock:${e.stock}
                 </li>
             </ul>`
