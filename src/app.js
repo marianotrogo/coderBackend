@@ -7,6 +7,7 @@ const { Server } = require('socket.io')
 const router = require('./routes/router')
 const ProductManager = require('./productManager')
 
+
 const app = express();
 const manager = new ProductManager
 
@@ -35,15 +36,13 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
     socket.on('newClient', data=>{
         console.log(data);  
-        socket.on('petProds', data =>{
-            io.emit('sendProd', )
+        
         })
         
         
         
     })
     
-})
 
 
 // app.use("/api/carts", cartRouter);

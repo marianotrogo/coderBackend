@@ -32,8 +32,4 @@ const renderProducts = async()=>{
 
 renderProducts()
 
-socket.emit('petProds', async()=>{
-   const petProds = await getProducts()
-   console.log(petProds);
-}
-)
+
