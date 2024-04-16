@@ -37,6 +37,7 @@ io.on('connection', (socket) => {
     socket.on('newClient', data=>{
         console.log(data);  
         
+
         })
         
         

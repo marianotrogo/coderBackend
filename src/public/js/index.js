@@ -2,6 +2,8 @@ const socket = io();
 
 socket.emit('newClient', 'new client connected')
 
+
+
 const getProducts = async()=>{
 
    const res = await fetch('http://localhost:8080/api/products')
@@ -31,5 +33,3 @@ const renderProducts = async()=>{
 }
 
 renderProducts()
-
-
