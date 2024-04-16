@@ -28,16 +28,17 @@ const httpServer = app.listen(8080, () => {
     console.log('listen to port 8080')
 })
 
-let productList = manager.getProducts()
+
 
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
     socket.on('newClient', data=>{
         console.log(data);  
+        socket.on('petProds', data =>{
+            io.emit('sendProd', )
+        })
         
-        
-        socket.emit('productList',productList);
         
         
     })

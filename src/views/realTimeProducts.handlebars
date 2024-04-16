@@ -1,50 +1,29 @@
 <h2>Productos en Real Time</h2>
 
-
-
-
-
-{{!-- <h2>Productos RealTime</h2>
-
-
-<div id="realTimeProducts">
-  <h2>Productos en RealTime</h2>
-  <h2>agregar productos</h2>
-  <div id="agregar">
-    <form method="post">
-      <div>
-        <label for="code">code</label>
-        <input type="number" name="code" id="code" />
-      </div>
-      <div>
-        <label for="title">title</label>
-        <input type="text" name="title" id="title" />
-      </div>
-      <div>
-        <label for="description">description</label>
-        <input type="text" name="description" id="description" />
-      </div>
-      <div>
-        <div>
-          <label for="price">price</label>
-          <input type="number" name="price" id="price" />
-        </div>
-      </div>
-      <div>
-        <label for="stock">stock</label>
-        <input type="text" name="stock" id="stock" />
-      </div>
-
-      <input type="submit" value="submit">
-    </form>
-  </div>
+<form action="" > 
   <div>
-    <h2>Productos actualizados</h2>
-    <div id="productosActualizados">
-      
-    </div>
+    <input type="text" name="title" id="title" placeholder="Titulo"> 
   </div>
-</div> --}}
+   <div>
+    <input type="text" name="description" id="description" placeholder="Descripcion"> 
+  </div>
+   <div>
+    <input type="text" name="price" id="price" placeholder="Precio"> 
+  </div>
+   <div>
+    <input type="text" name="code" id="code" placeholder="Code"> 
+  </div>
+   <div>
+    <input type="text" name="stock" id="stock" placeholder="Stock"> 
+  </div>
+   <div>
+    <input type="Submit"  id="" Value="Agregar"> 
+  </div>
+
+</form>
+
+<div id="productosActualizados"></div>
+
 
 <script src="/socket.io/socket.io.js"></script>
   <script src="/js/index.js"></script> 
