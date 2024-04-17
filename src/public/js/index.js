@@ -36,16 +36,17 @@ const renderProducts = async () => {
 
 renderProducts()
 
+
 const title = document.getElementById('title')
 const description = document.getElementById('description')
 const price = document.getElementById('price')
 const code = document.getElementById('code')
 const stock = document.getElementById('stock')
-const btn = document.getElementById('agree')
+const formAdd = document.getElementById('formAdd')
 
-let updateProds = {}
 
-btn.addEventListener('click', (e) =>{
+
+formAdd.addEventListener('submit', (e) =>{
    e.preventDefault()
       const prodsAct ={
          title: title.value,
@@ -54,13 +55,16 @@ btn.addEventListener('click', (e) =>{
          code: code.value,
          stock: stock.value
       }
-      updateProds.push(prodsAct)
-      socket.emit('actProds', updateProds)
+     
+   
+      socket.emit('actProds', prodsAct)
+   })
+
+   socket.on('prodsAct', data=>{
+      console.log(data);
    })
    
-socket.on('rendProdAct', data=>{
-   console.log(data);
-})
+
 
 
 
