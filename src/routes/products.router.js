@@ -29,7 +29,7 @@ productsRouter.get("/:pid", async (req, res) => {
   res.send({status: 'ok', payload: products});
 });
 
-productsRouter.post("/", async (req, res) => {
+productsRouter.post("/add", async (req, res) => {
   const {title, description, price,code,stock} = req.body;
   const newProd = await manager.addProducts(
     title,

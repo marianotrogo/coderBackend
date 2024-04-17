@@ -10,6 +10,7 @@ class ProductManager {
         try {
             const products = await fs.promises.readFile(this.path, 'utf-8')
             return JSON.parse(products)
+            
         } catch (e) {
             return[]
             
@@ -28,7 +29,7 @@ class ProductManager {
         let cd = prod.find((x)=>x.code === code);
 
         if (!cd){
-            await fs.promises.writeFile.apply(this.path, JSON.stringify([...prod, newProduct]))
+            await fs.promises.writeFile(this.path, JSON.stringify([...prod, newProduct]))
             console.log("Producto Agregado!");
             return ([...prod, newProduct])
         }else{

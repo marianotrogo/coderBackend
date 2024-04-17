@@ -19,6 +19,7 @@ app.use('/api/products', productsRouter)
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', process.cwd() + '/src/views')
+app.post('/add', productsRouter)
 
 
 router(app)
@@ -36,7 +37,9 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
     socket.on('newClient', data=>{
         console.log(data);  
-        
+        socket.on('actProds', data=>{
+            io.emit('rendProdAct', data)
+        })
 
         })
         
