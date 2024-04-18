@@ -39,10 +39,9 @@ const io = new Server(httpServer);
 io.on('connection', (socket) => {
     socket.on('newClient', data=>{
         console.log(data);  
-        socket.on('actProds', data=>{
-            productos.push(data)
-            io.emit('prodsAct',  productos)
-        })
+    })
+    socket.on('productAdded',(data)=>{
+        io.emit('regenList')
         })
         
         
@@ -51,5 +50,5 @@ io.on('connection', (socket) => {
     
 
 
-// app.use("/api/carts", cartRouter);
+
 

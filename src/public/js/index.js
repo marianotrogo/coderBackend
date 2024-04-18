@@ -55,14 +55,23 @@ formAdd.addEventListener('submit', (e) =>{
          code: code.value,
          stock: stock.value
       }
+     fetch('/api/products/add',{
+      method:'POST',
+      headers:{
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(prodsAct)
+     }).then(()=>
+     socket.emit('productAdded', prodsAct=>{
+      console.log(prodsAct);
+     })
+   )
+   socket.on('regenList', ()=>{
+      renderProducts()
+   })
      
-   
-      socket.emit('actProds', prodsAct)
-   })
+})
 
-   socket.on('prodsAct', data=>{
-      console.log(data);
-   })
    
 
 
