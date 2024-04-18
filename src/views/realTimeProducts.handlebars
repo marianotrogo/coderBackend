@@ -1,0 +1,33 @@
+<h2>Productos en Real Time</h2>
+
+<ul id="productosActualizados">
+  
+</ul>
+
+<form id="formAdd"> 
+  <div>
+    <input type="text" name="title" id="title" placeholder="Titulo"> 
+  </div>
+   <div>
+    <input type="text" name="description" id="description" placeholder="Descripcion"> 
+  </div>
+   <div>
+    <input type="text" name="price" id="price" placeholder="Precio"> 
+  </div>
+   <div>
+    <input type="text" name="code" id="code" placeholder="Code"> 
+  </div>
+   <div>
+    <input type="text" name="stock" id="stock" placeholder="Stock"> 
+  </div>
+   <div>
+    <button>Agregar</button>
+  </div>
+
+</form>
+
+{{!-- <div id="productosActualizados"></div> --}}
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script> 
