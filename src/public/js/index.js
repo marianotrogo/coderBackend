@@ -66,10 +66,10 @@ formAdd.addEventListener('submit', (e) =>{
       console.log(prodsAct);
      })
    )
-   socket.on('regenList', ()=>{
-      renderProducts()
-   })
-     
+})
+
+socket.on('regenList', ()=>{
+renderProducts()
 })
 
    

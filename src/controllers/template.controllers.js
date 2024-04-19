@@ -15,4 +15,8 @@ router.get('/realTimeProducts', async(req,res)=>{
     res.render('realTimeProducts', {prods})
 })
 
+router.get('/chat', (req,res)=>{
+    res.render('chat.handlebars')
+})
+
 module.exports = router
