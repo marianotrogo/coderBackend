@@ -4,8 +4,9 @@ const cartRouter = require('./routes/cart.router')
 const handlebars = require('express-handlebars');
 const { engine } = require('express-handlebars')
 const { Server } = require('socket.io')
-const router = require('./routes/router')
+const router = require('./routes/router');
 const mongooConnect = require('./db');
+
 
 const chats = [];
 

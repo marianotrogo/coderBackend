@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/', async (req, res) => {
     try {
-        const users = await User.find({status: true})
+        const users = await User.find({status:true})
         res.json({ payload: users })
     } catch (error) {
         res.json({ error })

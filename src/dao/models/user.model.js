@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     status: {
         type: Boolean,
-        default: true
+        default: true,
     }
 
 })
