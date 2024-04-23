@@ -1,7 +1,8 @@
 const socket = io();
 
+
 const chatBox = document.getElementById('chatBox')
-const messageLogs = document.getElementById('messageLogs')
+const messagesBox = document.getElementById('messagesBox')
 
 
 const getUsername = async () => {
@@ -25,7 +26,8 @@ const getUsername = async () => {
             })
         })
 
-        chatBox.addEventListener('keyup', e => {
+
+        chatBox.addEventListener('keyup', async e => {
             if (e.key === 'Enter') {
                 const data = {
                     userName: userName.value,
@@ -45,8 +47,9 @@ const getUsername = async () => {
 getUsername()
 
 
-socket.on('messageLogs', chats => {
+socket.on('messageForChat', chats => {
     let messages = '';
     chats.forEach(chat => (messages += `${chat.userName} dice: ${chat.message} <hr>`))
-    messageLogs.innerHTML = messages
+    messagesBox.innerHTML = messages
 })
+

@@ -1,37 +1,33 @@
 const {Router, json} = require('express')
-const ManagerMessage = require('../dao/mongo/messages.dao.manager')
-const MessageModel = require('../dao/models/messages.model')
+const  MessageModel = require('../dao/models/messages.model')
 
-const messageManager = new ManagerMessage()
-messageRouter = Router()
 
-messageRouter.use(json())
+const messageRouter = Router()
 
-messageRouter.get('/', async(req, res)=>{
-   try {
-        const messages = await MessageModel.find().lean()
-        res.json({payload: messages})
-   } catch (error) {
+messageRouter.get('/chat', async (req, res)=>{
+    try {
+        const messages = await MessageModel.find()
+        res.send(messages)
+    } catch (error) {
         res.json({error})
-   }
+    }
 })
 
 messageRouter.post('/', async (req,res)=>{
     try {
-        const { user, message} = req.body
-
-        const addMessage = {
+        const { user, message } = req.body
+        const newMessage = {
             user,
             message
         }
 
-        const newMessage = await MessageModel.create(addMessage)
-        res.json({payload: newMessage})
+        const addMessage = await MessageModel.create(newMessage)
+        const messages = await MessageModel.find()
+        global.io.emit('messageForChat', messages)
+        res.send(addMessage)
     } catch (error) {
         res.json({error})
     }
 })
 
 module.exports = messageRouter
-
-

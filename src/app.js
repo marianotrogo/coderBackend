@@ -27,9 +27,11 @@ const httpServer = app.listen(8080, () => {
     console.log('Server listen to port 8080')
 });
 
-const io = new Server(httpServer)
+// const io = new Server(httpServer)
+global.io = require('socket.io')(httpServer)
 
-io.on('connection', socket => {
+
+global.io.on('connection', socket => {
     socket.on('newClient', data => {
         console.log(data);
     })
@@ -38,12 +40,12 @@ io.on('connection', socket => {
     })
     socket.on('newUser', data => {
         socket.broadcast.emit('userConnected', data)
-        socket.emit('messageLogs', chats)
+        socket.emit('messagesBox', chats)
     })
     socket.on('message', data => {
         chats.push(data)
 
-        io.emit('messageLogs', chats)
+        io.emit('messagesBox', chats)
     })
 })
 
