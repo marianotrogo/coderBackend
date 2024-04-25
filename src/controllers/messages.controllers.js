@@ -13,18 +13,30 @@ messageRouter.get('/chat', async (req, res)=>{
     }
 })
 
-messageRouter.post('/', async (req,res)=>{
+messageRouter.post('/chat', async (req,res)=>{
     try {
-        const { user, message } = req.body
-        const newMessage = {
-            user,
-            message
-        }
+        const newMessage = new MessageModel({
+            user : req.body.userName,
+            message: req.body.message
+        })
 
-        const addMessage = await MessageModel.create(newMessage)
-        const messages = await MessageModel.find()
-        global.io.emit('messageForChat', messages)
-        res.send(addMessage)
+        const savedMessage = await newMessage.save()
+        res.status(201).json(savedMessage)
+
+        io.emit('newMessage', savedMessage)
+        console.log(savedMessage);
+        // const { user, message } =  req.body
+        // const newMessage = {
+        //     user,
+        //     message
+        // }
+
+
+        // const addMessage = await MessageModel.save(newMessage)
+        // const messages = await MessageModel.find()
+        // global.io.emit('messageForChat', messages)
+        
+        // res.send(addMessage)
     } catch (error) {
         res.json({error})
     }

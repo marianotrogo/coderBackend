@@ -16,6 +16,7 @@ const app = express();
 
 app.use(express.static(process.cwd() + '/src/public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use('/api/products', productsRouter)
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
@@ -44,8 +45,9 @@ global.io.on('connection', socket => {
     })
     socket.on('message', data => {
         chats.push(data)
+            io.emit('messagesBox', chats)
 
-        io.emit('messagesBox', chats)
+      
     })
 })
 

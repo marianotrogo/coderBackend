@@ -26,7 +26,6 @@ const getUsername = async () => {
             })
         })
 
-
         chatBox.addEventListener('keyup', async e => {
             if (e.key === 'Enter') {
                 const data = {
@@ -47,9 +46,9 @@ const getUsername = async () => {
 getUsername()
 
 
-socket.on('messageForChat', chats => {
+socket.on('messagesBox', data => {
     let messages = '';
-    chats.forEach(chat => (messages += `${chat.userName} dice: ${chat.message} <hr>`))
+    data.forEach(chat => (messages += `${chat.userName} dice: ${chat.message} <hr>`))
     messagesBox.innerHTML = messages
 })
 
