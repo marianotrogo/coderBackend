@@ -6,6 +6,8 @@ const { engine } = require('express-handlebars')
 const { Server } = require('socket.io')
 const router = require('./routes/router');
 const mongooConnect = require('./db');
+const bodyParser = require('body-parser');
+
 
 
 const chats = [];
@@ -13,7 +15,7 @@ const chats = [];
 mongooConnect()
 
 const app = express();
-
+app.use(bodyParser.json())
 app.use(express.static(process.cwd() + '/src/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
