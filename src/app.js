@@ -30,11 +30,11 @@ const httpServer = app.listen(8080, () => {
     console.log('Server listen to port 8080')
 });
 
-// const io = new Server(httpServer)
-global.io = require('socket.io')(httpServer)
+const io = new Server(httpServer)
 
 
-global.io.on('connection', socket => {
+
+io.on('connection', socket => {
     socket.on('newClient', data => {
         console.log(data);
     })
@@ -45,10 +45,15 @@ global.io.on('connection', socket => {
         socket.broadcast.emit('userConnected', data)
         socket.emit('messagesBox', chats)
     })
-    socket.on('message', data => {
+    socket.on('newMessage', data => {
         chats.push(data)
-            io.emit('messagesBox', chats)
+        console.log(chats);
+        
 
+        io.emit('messagesBox', chats)
+        
+        
+           
       
     })
 })

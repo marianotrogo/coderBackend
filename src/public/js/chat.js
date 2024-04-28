@@ -35,7 +35,7 @@ const getUsername = async () => {
                 chatBox.value = ''
 
                 socket.emit('message', data)
-                console.log(data);
+                
             }
         })
     } catch (error) {
