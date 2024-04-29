@@ -1,6 +1,5 @@
 const socket = io();
 
-
 const chatBox = document.getElementById('chatBox')
 const messagesBox = document.getElementById('messagesBox')
 
@@ -14,10 +13,10 @@ const getUsername = async () => {
             icon: "success"
         })
 
-        socket.emit('newUser', { userName: userName.value })
+        socket.emit('newUser', { user: userName.value })
         socket.on('userConnected', user => {
             swal.fire({
-                text: `${user.userName} Conectado!`,
+                text: `${user.user} Conectado!`,
                 toast: true,
                 position: "top-end",
                 timer: 3000,
@@ -26,14 +25,14 @@ const getUsername = async () => {
             })
         })
 
-        chatBox.addEventListener('keyup', async e => {
+        chatBox.addEventListener('keyup',  e => {
             if (e.key === 'Enter') {
                 const data = {
-                    userName: userName.value,
+                    user: userName.value,
                     message: chatBox.value
                 }
                 chatBox.value = ''
-
+                
                 socket.emit('message', data)
                 
             }
@@ -49,7 +48,7 @@ getUsername()
 
 socket.on('messagesBox', data => {
     let messages = '';
-    data.forEach(chat => (messages += `${chat.userName} dice: ${chat.message} <hr>`))
+    data.forEach(chat => (messages += `${chat.user} dice: ${chat.message} <hr>`))
     messagesBox.innerHTML = messages
 })
 

@@ -7,6 +7,7 @@ const { Server } = require('socket.io')
 const router = require('./routes/router');
 const mongooConnect = require('./db');
 const bodyParser = require('body-parser');
+const MessageModel = require('./dao/models/messages.model');
 
 
 
@@ -45,15 +46,21 @@ io.on('connection', socket => {
         socket.broadcast.emit('userConnected', data)
         socket.emit('messagesBox', chats)
     })
-    socket.on('newMessage', data => {
+    socket.on('message', async  data => {
         chats.push(data)
-        console.log(chats);
+       
+        try {
+            const newMessage = new MessageModel({
+              user: data.user,
+              message: data.message
+            });
+            await newMessage.save();
+          } catch (error) {
+            console.error("Error al guardar el input:", error);
+          }
         
 
-        io.emit('messagesBox', chats)
-        
-        
-           
+            io.emit('messagesBox', chats)
       
     })
 })
