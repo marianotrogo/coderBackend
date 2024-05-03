@@ -1,22 +1,38 @@
-const {Router} = require('express')
+const { Router } = require('express')
 const ProductManager = require('../productManager')
+const ProductModel = require('../dao/models/products.model')
 
 const item = new ProductManager()
 
 const router = Router()
 
-router.get('/', async (req,res)=>{
+router.get('/', async (req, res) => {
     const prods = await item.getProducts();
-    res.render('home', {prods})
+    res.render('home', { prods })
 })
 
-router.get('/realTimeProducts', async(req,res)=>{
+router.get('/realTimeProducts', async (req, res) => {
     const prods = await item.getProducts();
-    res.render('realTimeProducts', {prods})
+    res.render('realTimeProducts', { prods })
 })
 
-router.get('/chat', (req,res)=>{
+router.get('/chat', (req, res) => {
     res.render('chat.handlebars')
+})
+
+router.get('/products', async (req, res) => {
+    const { page = 1 } = req.query
+    const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages } = await ProductModel.paginate({}, { page, limit: 10, lean: true })
+
+    const products = docs;
+    res.render('products',{
+        products,
+        hasNextPage,
+        hasPrevPage,
+        nextPage,
+        prevPage,
+        totalPages
+    })
 })
 
 module.exports = router
