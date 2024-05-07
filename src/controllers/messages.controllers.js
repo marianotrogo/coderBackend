@@ -26,8 +26,6 @@ messageRouter.post('/chat',async  (req, res) => {
           res.status(201).json({ mensaje: 'Input guardado correctamente' });
 
 
-
-
     } catch (error) {
         
     }

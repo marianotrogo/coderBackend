@@ -46,26 +46,6 @@ deleteProduct = async (id)=>{
     return productDelete
 }
 
-orderPrice = async(num)=>{
-    const products = await ProductModel.aggregate([{$sort: {price: num}}])
-    return products;
-}
-
-getProductsByQueryTitle = async (dato)=>{
-    const products = await ProductModel.aggregate([{$match: {title: dato}}])
-    return products
-}
-
-getProductsByQueryPrice = async (dato)=>{
-    const products = await ProductModel.aggregate([{$match: {price: dato}}])
-    return products
-}
-
-getProductsByQueryStock= async (dato)=>{
-    const products = await ProductModel.aggregate([{$match: {stock: dato}}])
-    return products
-}
-
 
 
 

@@ -20,6 +20,7 @@ router.get('/chat', (req, res) => {
     res.render('chat.handlebars')
 })
 
+// hay que corrregir aqui// se renderiza lo de products y no lo de products controller
 router.get('/products', async (req, res) => {
     const { page = 1 } = req.query
     const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages } = await ProductModel.paginate({}, { page, limit: 10, lean: true })

@@ -2,12 +2,15 @@ const { Router, json } = require('express')
 const ProductModel = require('../dao/models/products.model')
 const ProductManager = require('../dao/mongo/products.dao.manager')
 const productsFiles = require('../files/product')
+const { urlencoded } = require('body-parser')
 
 const manager = new ProductManager()
 
 const prodRouter = Router()
 
 prodRouter.use(json())
+
+prodRouter.use(urlencoded({extended : true}))
 
 prodRouter.get('/', async (req, res) => {
     try {
@@ -17,6 +20,48 @@ prodRouter.get('/', async (req, res) => {
         res.json({ error })
     }
 })
+
+prodRouter.get('/agregate', async (req,res)=>{
+    try {
+        const {limit, page, sort, query, price} = req.query
+
+        const options = {
+            limit : limit || 10,
+            page: page || 1,
+            sort: {price: sort === 'asc' ? 1 : -1},
+            query: buildQuery(query)
+        }
+
+
+        // continuar aqui desde el repo de git https://github.com/fpalomeeosanz/segunda-practica-integradora/blob/main/src/routes/product.routes.js
+        const products = await ProductModel.find()
+
+        const totalPages = await products.totalPages
+
+        const prevPage = page > 1 ? page - 1 : null;
+        const nextPage = page < totalPages ? page + 1 : null;
+
+
+        const response = {
+            status : 'success',
+            payload: products,
+            totalPages,
+            nextPage,
+            prevPage,
+            page,
+            hasPrevPage: prevPage !== null,
+            hastNextPage: nextPage !== null,
+            prevLink: prevPage !== null ? `/?page=${prevPage}` : null,
+            nextLink: nextPage !== null ? `/?page=${nextPage}` : null,
+
+        };
+        res.send(response)
+       
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 prodRouter.get('/:id', async (req, res) => {
     try {
@@ -28,6 +73,8 @@ prodRouter.get('/:id', async (req, res) => {
 
     }
 })
+
+
 
 prodRouter.get('/:title', async (req, res) => {
     try {
