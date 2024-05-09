@@ -9,6 +9,7 @@ const router = app =>{
     app.use('/users', usersController)
     app.use('/prods', productsController)
     app.use('/messages', messagesControllers)
+    app.use('/products', productsController)
 }
 
 

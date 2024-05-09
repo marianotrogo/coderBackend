@@ -4,13 +4,14 @@ const ProductManager = require('../dao/mongo/products.dao.manager')
 const productsFiles = require('../files/product')
 const { urlencoded } = require('body-parser')
 
+
 const manager = new ProductManager()
 
 const prodRouter = Router()
 
 prodRouter.use(json())
 
-prodRouter.use(urlencoded({extended : true}))
+prodRouter.use(urlencoded({ extended: true }))
 
 prodRouter.get('/', async (req, res) => {
     try {
@@ -21,47 +22,103 @@ prodRouter.get('/', async (req, res) => {
     }
 })
 
-prodRouter.get('/agregate', async (req,res)=>{
-    try {
-        const {limit, page, sort, query, price} = req.query
-
-        const options = {
-            limit : limit || 10,
-            page: page || 1,
-            sort: {price: sort === 'asc' ? 1 : -1},
-            query: buildQuery(query)
-        }
-
-
-        // continuar aqui desde el repo de git https://github.com/fpalomeeosanz/segunda-practica-integradora/blob/main/src/routes/product.routes.js
-        const products = await ProductModel.find()
-
-        const totalPages = await products.totalPages
-
-        const prevPage = page > 1 ? page - 1 : null;
-        const nextPage = page < totalPages ? page + 1 : null;
-
-
-        const response = {
-            status : 'success',
-            payload: products,
-            totalPages,
-            nextPage,
-            prevPage,
-            page,
-            hasPrevPage: prevPage !== null,
-            hastNextPage: nextPage !== null,
-            prevLink: prevPage !== null ? `/?page=${prevPage}` : null,
-            nextLink: nextPage !== null ? `/?page=${nextPage}` : null,
-
-        };
-        res.send(response)
-       
-    } catch (error) {
-        console.log(error);
+prodRouter.get('/agregate', async (req, res) => {
+    const options = {
+        page: 1,
+        limit: 4
     }
-})
 
+    const { docs, page, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages } = await ProductModel.paginate({}, options)
+
+    const products = docs
+    res.render('products', {
+        products,
+        page,
+        hasNextPage,
+        hasPrevPage,
+        nextPage,
+        prevPage,
+        totalPages
+    })
+
+
+
+    // try {
+    //     const { page = 1 } = req.query
+    //     const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages } = await ProductModel.paginate({}, { page, limit: 5, lean: true })
+
+    //     const products = docs;
+    //     res.render('products',{
+    //         products,
+    //         page,
+    //         hasNextPage,
+    //         hasPrevPage,
+    //         nextPage,
+    //         prevPage,
+    //         totalPages
+    //     })
+
+    // } catch (error) {
+
+    // }
+
+    //     try {
+    //         const {limit, page, sort, query, price} = req.query
+
+    //         const options = {
+    //             limit : limit || 5,
+    //             page: page || 1,
+    //             sort: {price: sort === 'asc' ? 1 : -1},
+    //             query: buildQuery(query)
+    //         }
+
+
+
+    //         const products = await ProductModel.find()
+
+    //         const totalPages = await products.totalPages
+
+    //         const prevPage = page > 1 ? page - 1 : null;
+    //         const nextPage = page < totalPages ? page + 1 : null;
+
+
+    //         const response = {
+    //             status : 'success',
+    //             payload: products,
+    //             totalPages,
+    //             nextPage,
+    //             prevPage,
+    //             page,
+    //             hasPrevPage: prevPage !== null,
+    //             hastNextPage: nextPage !== null,
+    //             prevLink: prevPage !== null ? `/?page=${prevPage}` : null,
+    //             nextLink: nextPage !== null ? `/?page=${nextPage}` : null,
+
+    //         };
+    //         res.send(response)
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // })
+    // function buildQuery(query) {
+
+    //     const filter = {};
+
+    //     if (query) {
+    //      if (query === "category") {
+    //        filter.category = { $ne: null };
+    //      } else if (query === "availability") {
+    //        filter.stock = { $ne: 0 }; 
+    //      } else {
+    //        filter[query] = { $ne: null };
+    //      }
+    //     }
+
+    //     return filter; 
+
+    //    }
+})
 
 prodRouter.get('/:id', async (req, res) => {
     try {
