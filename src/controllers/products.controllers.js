@@ -20,7 +20,17 @@ prodRouter.get('/', async (req, res) => {
             const limit = parseInt(req.query.limit, 10) || 10;
             const page = parseInt(req.query.page, 10) || 1;
             const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
-            res.send({products})
+            const {totalPages, prevPages, nextPages, hasPrevPages, hasNextPages} = await ProductModel.paginate({})
+            res.send({status: 'Success',
+             payload: products,
+             totalPages,
+             prevPages,
+             nextPages,
+             page,
+             hasPrevPages,
+             hasNextPages,
+
+            })
         }
 
         getAllproducts()

@@ -1,6 +1,9 @@
 const { Router } = require('express')
 const ProductManager = require('../productManager')
 const ProductModel = require('../dao/models/products.model')
+const prodRouter = require('./products.controllers')
+
+const agregate = new prodRouter()
 
 const item = new ProductManager()
 
@@ -23,7 +26,8 @@ router.get('/chat', (req, res) => {
 
 // hay que corrregir aqui// se renderiza lo de products y no lo de products controller
 router.get('/products', async (req, res) => {
-    console.log('ruta products');
+    const prodsPaginate = await agregate.getAllProducts()
+    res.render('products', {prodsPaginate})
     // const { page = 1 } = req.query
     // const { docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages } = await ProductModel.paginate({}, { page, limit: 5, lean: true })
 
