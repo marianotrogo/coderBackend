@@ -1,23 +1,23 @@
 <div>
-    <h1>Productos</h1>
-    {{#each products}}
-    <ul>
-        <li>{{ this.title}} <br>
-        Descripcion:{{this.description}} <br>
-        Precio:{{this.price}} <br>
-        Stock:{{this.stock}}</li>
-    </ul>
-    {{/each}} 
-<div>
+  <h1>Productos</h1>
+  {{#each products}}
+  <ul>
+    <li>{{this.title}} <br>
+      Descripcion:{{this.description}} <br>
+      Precio:{{this.price}} <br>
+      Stock:{{this.stock}}</li>
+  </ul>
+  {{/each}}
+  <div>
     {{#if hasPrevPage}}
     <a href="/products?page={{prevPage}}"><button>Anterior</button></a>
-  {{/if}}
+    {{/if}}
 
     <span>Pagina{{products.page}} de {{products.totalPages}}</span>
-  {{#if hasNextPage}}
+    {{#if hasNextPage}}
     <a href="/products?page={{nextPage}}"><button>Siguiente</button></a>
-  {{/if}}
+    {{/if}}
 
-</div>
+  </div>
 
 </div>
