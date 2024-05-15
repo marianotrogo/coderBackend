@@ -14,35 +14,36 @@ prodRouter.use(json())
 prodRouter.use(urlencoded({ extended: true }))
 
 
- getAllProducts = async(req,res)=>{
+getAllProducts = async (req,res)=>{
     try {
-        const {limit, page, filter, ord} = req.query
-        let metFilter
-        const pag = page !== undefined ? page : 1
-        const limi = limit !== undefined ? limi: 10
-
-        if (filter == 'true' || filter == 'false'){
-            metFilter = 'status'
-        }else{
-            if(filter !== undefined)
-                metFilter = 'category'
-        }
-
-        const query = metFilter != undefined ? {[metFilter]: filter}:{}
-        const ordQuery = ord !== undefined ? {price: ord} : {}
-        const prods = await ProductModel.paginate(query, {limit: limi, page: pag, sort: ordQuery})
-        res.status(200).json(prods)
-    } catch (error) {
-        res.send(error)
         
+        
+
+            const limit = parseInt(req.query.limit, 10) || 10;
+            const page = parseInt(req.query.page, 10) || 1;
+            const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
+            const {totalPages, prevPages, nextPages, hasPrevPages, hasNextPages} = await ProductModel.paginate({})
+            res.send({status: 'Success',
+             payload: products,
+             totalPages,
+             prevPages,
+             nextPages,
+             page,
+             hasPrevPages,
+             hasNextPages,
+    })
+            
+
+    } catch (error) {
+        console.log(error);
     }
-}
+      
+        
 
-
-
+    }
 // prodRouter.get('/', async (req, res) => {
 //     try {
-//         const getAllproducts = async ()=>{
+        
 
 //             const limit = parseInt(req.query.limit, 10) || 10;
 //             const page = parseInt(req.query.page, 10) || 1;
@@ -58,9 +59,9 @@ prodRouter.use(urlencoded({ extended: true }))
 //              hasNextPages,
 
 //             })
-//         }
+        
 
-//         getAllproducts()
+       
 //     } catch (error) {
 
 //     }

@@ -24,9 +24,9 @@ router.get('/chat', (req, res) => {
     res.render('chat.handlebars')
 })
 
-router.get('/products', (req,res)=>{
-    
-    res.render('products.handlebars', {getAllProducts})
+router.get('/products', async (req,res)=>{
+    const products = await getAllProducts()
+    res.render('products.handlebars', {products})
 })
 
 // hay que corrregir aqui// se renderiza lo de products y no lo de products controller
