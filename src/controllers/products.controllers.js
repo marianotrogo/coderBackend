@@ -14,7 +14,7 @@ prodRouter.use(json())
 prodRouter.use(urlencoded({ extended: true }))
 
 
-getAllProducts = async (req,res)=>{
+prodRouter.get('/products', async (req,res)=>{
     try {
         
         
@@ -23,7 +23,7 @@ getAllProducts = async (req,res)=>{
             const page = parseInt(req.query.page, 10) || 1;
             const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
             const {totalPages, prevPages, nextPages, hasPrevPages, hasNextPages} = await ProductModel.paginate({})
-            res.send({status: 'Success',
+            res.render({status: 'Success',
              payload: products,
              totalPages,
              prevPages,
@@ -41,6 +41,7 @@ getAllProducts = async (req,res)=>{
         
 
     }
+)
 // prodRouter.get('/', async (req, res) => {
 //     try {
         
