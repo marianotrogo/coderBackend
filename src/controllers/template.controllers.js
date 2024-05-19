@@ -25,31 +25,35 @@ router.get('/chat', (req, res) => {
 })
 
 router.get('/products', async (req, res) => {
-    try {
+    const products = await ProductModel.find()
+    res.render('products',{products})
 
-        const limit = parseInt(req.query.limit) || 10;
-        const page = parseInt(req.query.page) || 1;
-        const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
+
+//     try {
+
+//         const limit = parseInt(req.query.limit) || 10;
+//         const page = parseInt(req.query.page) || 1;
+//         const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
     
-        const { docs ,totalPages, prevPages, nextPages, hasPrevPages, hasNextPages } = await ProductModel.paginate({})
-        console.log(totalPages);
-        res.render('products.handlebars',
-            {docs,
-                products
-                // status: 'Success',
-                // products,
-                // totalPages,
-                // prevPages,
-                // nextPages,
-                // page,
-                // hasPrevPages,
-                // hasNextPages,
-            })
+//         const { docs ,totalPages, prevPages, nextPages, hasPrevPages, hasNextPages } = await ProductModel.paginate({})
+//         console.log(totalPages);
+//         res.render('products.handlebars',
+//             {docs,
+//                 products
+//                 // status: 'Success',
+//                 // products,
+//                 // totalPages,
+//                 // prevPages,
+//                 // nextPages,
+//                 // page,
+//                 // hasPrevPages,
+//                 // hasNextPages,
+//             })
 
 
-    } catch (error) {
-        console.log(error);
-    }
+//     } catch (error) {
+//         console.log(error);
+//     }
 
 
 

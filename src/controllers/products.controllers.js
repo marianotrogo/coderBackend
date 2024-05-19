@@ -13,6 +13,11 @@ prodRouter.use(json())
 
 prodRouter.use(urlencoded({ extended: true }))
 
+prodRouter.get('/products', async(req,res)=>{
+    const products = await ProductModel.find()
+    res.render('products', {products})
+})
+
 
 // prodRouter.get('/products', async (req, res) => {
 //     try {
