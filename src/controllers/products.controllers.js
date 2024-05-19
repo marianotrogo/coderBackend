@@ -14,37 +14,42 @@ prodRouter.use(json())
 prodRouter.use(urlencoded({ extended: true }))
 
 
-prodRouter.get('/products', async (req,res)=>{
-    try {
-        
-        
+// prodRouter.get('/products', async (req, res) => {
+//     try {
 
-            const limit = parseInt(req.query.limit, 10) || 10;
-            const page = parseInt(req.query.page, 10) || 1;
-            const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
-            const {totalPages, prevPages, nextPages, hasPrevPages, hasNextPages} = await ProductModel.paginate({})
-            res.render({status: 'Success',
-             payload: products,
-             totalPages,
-             prevPages,
-             nextPages,
-             page,
-             hasPrevPages,
-             hasNextPages,
-    })
-            
 
-    } catch (error) {
-        console.log(error);
-    }
-      
-        
 
-    }
-)
+//         const limit = parseInt(req.query.limit, 10) || 10;
+//         const page = parseInt(req.query.page, 10) || 1;
+//         const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
+//         console.log(products);
+//         const { totalPages, prevPages, nextPages, hasPrevPages, hasNextPages } = await ProductModel.paginate({})
+//         console.log(totalPages);
+//         res.render('products.handlebars',
+//             {products
+//                 // status: 'Success',
+//                 // products,
+//                 // totalPages,
+//                 // prevPages,
+//                 // nextPages,
+//                 // page,
+//                 // hasPrevPages,
+//                 // hasNextPages,
+//             })
+
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+
+
+
+// }
+// )
+
 // prodRouter.get('/', async (req, res) => {
 //     try {
-        
+
 
 //             const limit = parseInt(req.query.limit, 10) || 10;
 //             const page = parseInt(req.query.page, 10) || 1;
@@ -60,13 +65,13 @@ prodRouter.get('/products', async (req,res)=>{
 //              hasNextPages,
 
 //             })
-        
 
-       
+
+
 //     } catch (error) {
 
 //     }
-  
+
 
 // })
 
