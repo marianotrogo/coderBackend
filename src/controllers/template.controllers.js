@@ -1,14 +1,20 @@
 const { Router } = require('express')
 const ProductManager = require('../productManager')
 const ProductModel = require('../dao/models/products.model')
-const {getAllProducts} = require('./products.controllers')
+const { getAllProducts } = require('./products.controllers')
+const { urlencoded } = require('body-parser')
 
 
 
 const item = new ProductManager()
 
 
+
 const router = Router()
+
+
+
+
 
 router.get('/', async (req, res) => {
     const prods = await item.getProducts();
@@ -25,35 +31,43 @@ router.get('/chat', (req, res) => {
 })
 
 router.get('/products', async (req, res) => {
-    const products = await ProductModel.find()
-    res.render('products',{products})
+    const limit = parseInt(req.query.limit, 10) || 10
+    const page = parseInt(req.query.page) || 1
+    try {
+        const products = await ProductModel.paginate({}, {page, limit})
+        
+        res.render('products', { products })
+
+    } catch (error) {
+        console.log(error);
+    }
 
 
-//     try {
+    //     try {
 
-//         const limit = parseInt(req.query.limit) || 10;
-//         const page = parseInt(req.query.page) || 1;
-//         const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
-    
-//         const { docs ,totalPages, prevPages, nextPages, hasPrevPages, hasNextPages } = await ProductModel.paginate({})
-//         console.log(totalPages);
-//         res.render('products.handlebars',
-//             {docs,
-//                 products
-//                 // status: 'Success',
-//                 // products,
-//                 // totalPages,
-//                 // prevPages,
-//                 // nextPages,
-//                 // page,
-//                 // hasPrevPages,
-//                 // hasNextPages,
-//             })
+    //         const limit = parseInt(req.query.limit) || 10;
+    //         const page = parseInt(req.query.page) || 1;
+    //         const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
+
+    //         const { docs ,totalPages, prevPages, nextPages, hasPrevPages, hasNextPages } = await ProductModel.paginate({})
+    //         console.log(totalPages);
+    //         res.render('products.handlebars',
+    //             {docs,
+    //                 products
+    //                 // status: 'Success',
+    //                 // products,
+    //                 // totalPages,
+    //                 // prevPages,
+    //                 // nextPages,
+    //                 // page,
+    //                 // hasPrevPages,
+    //                 // hasNextPages,
+    //             })
 
 
-//     } catch (error) {
-//         console.log(error);
-//     }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
 
 
 

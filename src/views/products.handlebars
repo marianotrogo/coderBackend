@@ -1,6 +1,20 @@
 <div>
-  {{#each products}}
+
+  {{#each products.docs}}
+ 
+    
+    <ul>
+      <li>
+        <h4>{{title}}</h4>
+        Descripcion: {{description}}
+        Precio: {{price}}
+        Stock: {{stock}}
+
+      </li>
+      
+    </ul>
   {{/each}}
+  
 </div>
 
 {{!-- <div>
