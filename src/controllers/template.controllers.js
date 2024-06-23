@@ -4,17 +4,9 @@ const ProductModel = require('../dao/models/products.model')
 const { getAllProducts } = require('./products.controllers')
 const { urlencoded } = require('body-parser')
 
-
-
 const item = new ProductManager()
 
-
-
 const router = Router()
-
-
-
-
 
 router.get('/', async (req, res) => {
     const prods = await item.getProducts();
@@ -41,39 +33,6 @@ router.get('/products', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-
-
-    //     try {
-
-    //         const limit = parseInt(req.query.limit) || 10;
-    //         const page = parseInt(req.query.page) || 1;
-    //         const products = await ProductModel.paginate({}, { limit, page }, { __v: 0 })
-
-    //         const { docs ,totalPages, prevPages, nextPages, hasPrevPages, hasNextPages } = await ProductModel.paginate({})
-    //         console.log(totalPages);
-    //         res.render('products.handlebars',
-    //             {docs,
-    //                 products
-    //                 // status: 'Success',
-    //                 // products,
-    //                 // totalPages,
-    //                 // prevPages,
-    //                 // nextPages,
-    //                 // page,
-    //                 // hasPrevPages,
-    //                 // hasNextPages,
-    //             })
-
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-
-
-
-}
-)
-
-// hay que corrregir aqui// se renderiza lo de products y no lo de products controller
+})
 
 module.exports = router
