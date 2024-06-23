@@ -7,13 +7,6 @@ const mongooConnect = async () => {
     try {
         await  mongoose.connect(`mongodb+srv://marianoemmanuel22:Mt086313.@cluster0.9jkirbe.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0`)
         console.log('db is connected');
-    //    const mongoProd = await ProductModel.aggregate([
-    //         {
-    //             $match: {description: 'Ps4'}
-    //         },
-            
-    //     ])
-    //     console.log(mongoProd);
     }
     catch (error) {
         console.log(error);
