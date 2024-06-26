@@ -39,7 +39,7 @@ app.use(
     secret: 'code Secret',
     store: MongoStore.create({
       mongoUrl: 'mongodb+srv://marianoemmanuel22:Mt086313.@cluster0.9jkirbe.mongodb.net/sessions?retryWrites=true&w=majority&appName=Cluster0',
-      ttl: 10,
+      
     }),
     resave:false,
     saveUninitialized: false

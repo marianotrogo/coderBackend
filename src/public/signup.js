@@ -1,4 +1,4 @@
-const form = document.getElementById('loginForm')
+const form = document.getElementById('signupForm')
 
 form.addEventListener('submit', e => {
     e.preventDefault()
@@ -12,7 +12,7 @@ form.addEventListener('submit', e => {
 
 
     const fetchParams = {
-        url: '/auth',
+        url: '/users',
         headers: {
             'Content-type': 'application/json'
         },

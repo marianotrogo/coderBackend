@@ -7,6 +7,7 @@ router.post('/', async (req, res) => {
 try {
     
     const { email, password } = req.body
+    console.log(req.body);
     
     const user = await Login.findOne({email})
     
