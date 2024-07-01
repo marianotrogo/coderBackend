@@ -12,7 +12,7 @@ form.addEventListener('submit', e => {
 
 
     const fetchParams = {
-        url: '/users',
+        url: '/userSign',
         headers: {
             'Content-type': 'application/json'
         },

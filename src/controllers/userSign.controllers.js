@@ -10,22 +10,25 @@ router.post('/', async (req, res) => {
         console.log(req.body);
 
         const newUserInfo = {
-            
+            first_name,
+            last_name,
+            email,
+            password
         }
 
-        const user = await Login.findOne({ email })
+        const user = await Login.create({ newUserInfo })
 
-        if (!user) return res.status(400).json('Bad Request')
+        // if (!user) return res.status(400).json('Bad Request')
 
-        if (user.password !== password) return res.status(400).json('Bad Request')
+        // if (user.password !== password) return res.status(400).json('Bad Request')
 
-        req.session.user = {
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email
-        }
+        // req.session.user = {
+        //     first_name: user.first_name,
+        //     last_name: user.last_name,
+        //     email: user.email
+        // }
 
-        res.json({ status: 'Success', message: 'Sesion Iniciada' })
+        res.json({ status: 'Success', message: 'Registro Exitoso' })
     } catch (error) {
         console.log(error);
         res.status(500).json({ status: 'Error', message: 'Internal Server Error' })
